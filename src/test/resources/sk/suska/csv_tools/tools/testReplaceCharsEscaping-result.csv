@@ -1,0 +1,2 @@
+'header column 1';header column 2;'header column 3';header column 4;'header column 5'
+'field without "special char"';'filed with ''special char'' ľščťžýáíéúäň';'auto-escaped ; field';'another ''autor-escaped field''';99.999

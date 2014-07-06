@@ -1,0 +1,163 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import java.lang.String?>
+<GridPane fx:controller="sk.suska.csv_tools.ui.FormController" xmlns:fx="http://javafx.com/fxml" alignment="center"
+          hgap="15" vgap="15">
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <!-- heading -->
+    <Text text="CSV Tools"
+          GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3"/>
+
+    <!-- input file -->
+    <Label text="Input file:" alignment="TOP_LEFT"
+           GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+    <BorderPane GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="2">
+        <center>
+            <TextField fx:id="filePath"/>
+        </center>
+        <right>
+            <Button fx:id="fileSearch" text="..." onAction="#handleChooseFile"/>
+        </right>
+        <bottom>
+            <Label fx:id="fileNotExistsLabel" text="File does not exist (check the path above or pick file)" visible="false"/>
+        </bottom>
+    </BorderPane>
+
+    <!-- line numbers -->
+    <CheckBox fx:id="splitCheck" text="Split to files" onAction="#handleSplitCheckChecked"
+              GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+    <Label fx:id="linesLabel" text="Lines per file:" visible="false"
+           GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
+    <TextField fx:id="lines" alignment="BASELINE_RIGHT" text="10000" visible="false"
+               GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+    <CheckBox fx:id="repeatHeaderCheck" text="Repeat header in each file" visible="false"
+              GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+
+    <!-- output file mask -->
+    <Label fx:id="fileMaskLabel" text="Output files mask:" visible="false"
+           GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+
+    <TextField fx:id="fileMask" text="parts\{{filename}}_{{index}}.csv" visible="false"
+               GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="2"/>
+
+    <!-- Header -->
+    <Label text="Input" alignment="CENTER"
+           GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+    <Label text="Output" alignment="CENTER"
+           GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+
+    <!-- Encoding -->
+    <Label text="Encoding:"
+           GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+
+    <ComboBox fx:id="inputEncoding" onAction="#handleInputEncodingChange"
+              GridPane.columnIndex="1" GridPane.rowIndex="6">
+    </ComboBox>
+
+    <ComboBox fx:id="outputEncoding"
+              GridPane.columnIndex="2" GridPane.rowIndex="6">
+    </ComboBox>
+
+    <!-- escaping -->
+    <Label text="Escaping character:"
+           GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+
+    <GridPane hgap="15"
+              GridPane.columnIndex="1" GridPane.rowIndex="7">
+        <ComboBox fx:id="inputEscaping" onAction="#handleInputEscapingChange"
+                  GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="&quot;"/>
+                    <String fx:value="'"/>
+                    <String fx:value="`"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <TextField fx:id="customInputEscaping" prefWidth="30" alignment="CENTER"
+                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    </GridPane>
+
+    <GridPane fx:id="outputEscapingPane" hgap="15"
+              GridPane.columnIndex="2" GridPane.rowIndex="7">
+        <ComboBox fx:id="outputEscaping" onAction="#handleOutputEscapingChange"
+                  GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="&quot;"/>
+                    <String fx:value="'"/>
+                    <String fx:value="`"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <TextField fx:id="customOutputEscaping" prefWidth="30" alignment="CENTER"
+                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    </GridPane>
+
+    <!-- separator -->
+    <Label text="Separator:"
+           GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+
+    <GridPane hgap="15"
+              GridPane.columnIndex="1" GridPane.rowIndex="8">
+        <ComboBox fx:id="inputSeparator" onAction="#handleInputSeparatorChange"
+                  GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value=","/>
+                    <String fx:value=";"/>
+                    <String fx:value=":"/>
+                    <String fx:value="|"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <TextField fx:id="customInputSeparator" prefWidth="30" alignment="CENTER"
+                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    </GridPane>
+
+    <GridPane fx:id="outputSeparatorPane" hgap="15"
+              GridPane.columnIndex="2" GridPane.rowIndex="8">
+        <ComboBox fx:id="outputSeparator" onAction="#handleOutputSeparatorChange"
+                  GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value=","/>
+                    <String fx:value=";"/>
+                    <String fx:value=":"/>
+                    <String fx:value="|"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <TextField fx:id="customOutputSeparator" prefWidth="30" alignment="CENTER"
+                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+    </GridPane>
+
+    <!-- submit button -->
+    <FlowPane alignment="CENTER"
+              GridPane.columnIndex="0" GridPane.rowIndex="9" GridPane.columnSpan="3">
+        <padding>
+            <Insets top="15" right="15" bottom="0" left="15"/>
+        </padding>
+
+        <Button fx:id="splitButton" text="Convert file" onAction="#handleSplit"/>
+    </FlowPane>
+</GridPane>
